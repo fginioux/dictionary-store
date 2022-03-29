@@ -1,19 +1,19 @@
 import { v4 as uuidv4 } from "uuid";
-import { setItem, getItem } from "./helpers";
-import { StorePrefix } from "./constants";
+import { setItem, getItem } from "./helpers.js";
+import { StorePrefix } from "./constants.js";
 
 const StoreKey = `${StorePrefix}--users`;
 
 export const Users = {
   register: async (data) => {
-    const toRegister = { ...data, id: uuidv4(), connexions: 0 };
+    const toRegister = { ...data, id: uuidv4(), connections: 0 };
     const { email } = toRegister;
     let users = getAllUsers();
 
     let user = getByEmail(email);
     if (user) {
       console.warn(`User already registered with email "${email}".`);
-      user = { ...user, connexions: ++user.connexions };
+      user = { ...user, connections: ++user.connections };
       users = users.map((u) => {
         if (u.id === user.id) {
           return { ...user };

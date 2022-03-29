@@ -8,12 +8,22 @@ export const Languages = {
   add: async (data) => {
     const { userId } = data;
     if (!userId) {
-      throw Error(`Error: prop userId is missing in ${JSON.stringify(data)}.`);
+      throw new Error(
+        `Error: prop userId is missing in ${JSON.stringify(data)}.`
+      );
     }
 
     let languages = getLanguages();
-    const { label } = data;
-    if (getLanguages(userId).find((l) => isEqualStr(label, l.label))) {
+    const { label, code } = data;
+    if (
+      getLanguages(userId).find((l) => {
+        if (code && l.code) {
+          return isEqualStr(code, l.code);
+        }
+
+        return isEqualStr(label, l.label);
+      })
+    ) {
       console.warn(`Warning: language with label "${label}" already exists.`);
     } else {
       setLanguages(
@@ -24,11 +34,21 @@ export const Languages = {
     return getLanguages(userId);
   },
 
-  get: async ({ userId, id }) => {
-    return getLanguages(userId).find((l) => l.id === id);
+  get: async ({ userId, id, code }) => {
+    return getLanguages(userId).find((l) => {
+      if (code) {
+        return isEqualStr(code, `${l.code}`);
+      }
+
+      return l.id === id;
+    });
   },
 
   getAll: async (userId) => {
+    if (!userId) {
+      throw new Error(`Error: userId argument is required.`);
+    }
+
     return getLanguages(userId);
   },
 

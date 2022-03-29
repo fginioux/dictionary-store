@@ -1,7 +1,5 @@
 import { Languages } from "./languages";
 import { Users } from "./users";
+import { Words } from "./words";
 
-export const DictionaryStore = {
-  languages: Languages,
-  users: Users,
-};
+export { Languages, Users, Words };
