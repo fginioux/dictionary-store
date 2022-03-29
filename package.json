@@ -1,6 +1,6 @@
 {
   "name": "dictionary-store",
-  "version": "1.0.0-a.3",
+  "version": "1.0.0-a.4",
   "description": "data management for dictionary app",
   "type": "module",
   "main": "dist/dictionary-store.cjs.js",
